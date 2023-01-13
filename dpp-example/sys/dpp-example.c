@@ -8,7 +8,7 @@ DRIVER_INITIALIZE DriverEntry;
 DRIVER_UNLOAD DriverUnload;
 
 NTSTATUS
-// NTAPI
+NTAPI
 DriverEntry(
 		IN PDRIVER_OBJECT DriverObject,
 		IN PUNICODE_STRING RegistryPath
@@ -26,7 +26,7 @@ DriverEntry(
 }
 
 VOID
-// NTAPI
+NTAPI
 DriverUnload(
 		IN PDRIVER_OBJECT DriverObject
         )
