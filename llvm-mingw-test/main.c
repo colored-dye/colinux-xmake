@@ -17,7 +17,7 @@ int main() {
     mem_size *= sys_info.dwPageSize;
     float size = (float)mem_size;
     size /= (1024 * 1024);
-    printf("%.3f\n", size);
+    printf("%.3fGB\n", size);
 
     return 0;
 }

@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#ifdef _WIN64
+#undef _WIN64
+#endif
+
 #include "checksum.h"
 
 #define WORD_MASK (0xffffUL)
@@ -16,8 +21,8 @@ ULONG get_checksum_offset(const UCHAR *buf) {
 
 	IMAGE_NT_HEADERS nt_header;
 	checksum_offset = PE;
-	checksum_offset += (void*)&nt_header.OptionalHeader - (void*)&nt_header;
-	checksum_offset += (void*)&nt_header.OptionalHeader.CheckSum - (void*)&nt_header.OptionalHeader;
+	checksum_offset += (ULONG)&nt_header.OptionalHeader - (ULONG)&nt_header;
+	checksum_offset += (ULONG)&nt_header.OptionalHeader.CheckSum - (ULONG)&nt_header.OptionalHeader;
 
 	return checksum_offset;
 }
@@ -67,7 +72,7 @@ int main(int argc, char *argv[]) {
 	struct stat file_stat;
 	stat(argv[1], &file_stat);
 	ULONGLONG file_size = file_stat.st_size;
-	printf("File size: 0x%lx\n", file_size);
+	printf("File size: 0x%llx\n", file_size);
 
 	buf = (UCHAR*)malloc(file_size);
 	fread(buf, file_size, 1, fp);

@@ -4,15 +4,17 @@ add_requires("llvm-mingw")
 target("dpp-example")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.env.winver", "win7")
-    add_files("sys/*.c")
+    add_files("dpp-example/sys/*.c")
+    add_cflags("-m32", {force = true})
 
 target("loader")
     add_rules("wdk.binary", "wdk.env.wdm")
     set_values("wdk.env.winver", "win7")
-    add_files("exe/*.c")
+    add_files("dpp-example/exe/*.c")
+    add_cflags("-m32", {force = true})
 
 target("llvm-mingw-test")
-    add_deps("checksum")
+    add_deps("checksum") -- Depends on `checksum'
     set_kind("binary")
     set_toolchains("mingw@llvm-mingw")
     add_files("llvm-mingw-test/*.c")
@@ -26,6 +28,12 @@ target("checksum")
 rule("correct_checksum")
     after_build(
         function (target)
-            print("Correct `%s''s checksum", target:targetfile())
+            cprint("${bright green}Correct `%s''s checksum${clear}", target:targetfile())
+            os.exec("%s/checksum %s", target:targetdir(), target:targetfile())
         end
     )
+
+target("hello")
+	set_kind("binary")
+	add_files("hello/*.c")
+
