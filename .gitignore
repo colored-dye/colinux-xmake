@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 .vscode/
 .xmake/
 build/
 fltk*/
+=======
+.vscode/
+.xmake/
+build/
+fltk*/
+>>>>>>> 7ed1c0f (colinux subdirectory)

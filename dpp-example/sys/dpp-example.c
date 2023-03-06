@@ -4,6 +4,12 @@
 	DbgPrint("coLinux %s: ", __FILE__);\
 	DbgPrint(__VA_ARGS__);
 
+#ifdef DEBUG
+#define DBG_BREAKPOINT __asm { int 3 }
+#else
+#define DBG_BREAKPOINT
+#endif
+
 DRIVER_INITIALIZE DriverEntry;
 DRIVER_UNLOAD DriverUnload;
 
@@ -18,7 +24,7 @@ DriverEntry(
 
 	KDPRINT("%s\n", "Hello ring0!");
 
-	asm ("int3");
+	DBG_BREAKPOINT;
 
 	DriverObject->DriverUnload = DriverUnload;
 

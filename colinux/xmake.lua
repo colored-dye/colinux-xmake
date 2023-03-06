@@ -1,0 +1,5 @@
+target("colinux")
+    set_toolchains("clang-cl")
+    set_kind("object")
+    add_cflags("-m32", {force = true})
+    add_cxxflags("-m32", {force = true})
